@@ -1,18 +1,18 @@
 package circus;
 
-import circus.animal.Elephant;
 import circus.stuff.Equipment;
+import circus.stuff.Cage;
 import circus.stuff.Cannon;
 import circus.stuff.Ladder;
 
 import circus.animal.Animal;
 import circus.animal.Duck;
+import circus.animal.Elephant;
 import circus.animal.Parrot;
 import circus.animal.Tiger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 public class Circus {
     private static Animal[] animals = {
@@ -46,6 +46,26 @@ public class Circus {
         return total;
     }
 
+    private static void printAllAnimals(ArrayList<Animal> animalArrayList) {
+        for (Animal a : animalArrayList) {
+            System.out.println(a);
+        }
+    }
+
+    private static void printCircusSize(ArrayList<Animal> animalArrayList) {
+        System.out.println("Number of animals in our circus (AL): " + animalArrayList.size());
+    }
+
+
+    private static Animal findAnimal(ArrayList<Animal> animalArrayList, String candidate) {
+        for (Animal a : animalArrayList) {
+            if (a.name == candidate) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
 
         System.out.println("number of animals in our circus (Array): " + animals.length);
@@ -77,24 +97,31 @@ public class Circus {
         animalArrayList.sort(Animal.animalNameComparator);
         System.out.println("After sorting");
         printAllAnimals(animalArrayList);
-    }
 
-    private static void printCircusSize(ArrayList<Animal> animalArrayList) {
-        System.out.println("Number of animals in our circus (AL): " + animalArrayList.size());
-    }
+        animalArrayList.add(new Tiger("Sherkhan"));
 
-    private static void printAllAnimals(ArrayList<Animal> animalArrayList) {
-        for (Animal a : animalArrayList) {
-            System.out.println(a);
+        animalArrayList.add(new Parrot("Poppert"));
+
+        Duck louie = new Duck("Bluey");
+        animalArrayList.add(louie);
+        Elephant strongOne = new Elephant("StrongOne");
+        animalArrayList.add(strongOne);
+
+        printAllAnimals(animalArrayList);
+
+        Cage<Duck> duckCage = new Cage<>();
+        Duck duck = new Duck("McDuck");
+        duckCage.lockUp(duck);
+        Parrot parrot = new Parrot("Naughty");
+        Cage<Parrot> parrotCage = new Cage<>();
+        parrotCage.lockUp(parrot);
+
+        ArrayList<Cage> cages = new ArrayList<>();
+        cages.add(duckCage);
+        cages.add(parrotCage);
+
+        for(Cage c: cages) {
+            c.release();
         }
-    }
-
-    private static Animal findAnimal(ArrayList<Animal> animalArrayList, String candidate) {
-        for (Animal a : animalArrayList) {
-            if (a.name == candidate) {
-                return a;
-            }
-        }
-        return null;
     }
 }
